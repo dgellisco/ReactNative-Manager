@@ -31,10 +31,12 @@ export const loginUser = ({ email, password }) => {
     // This allows us to return an object by using an sync function and the 'dispatch' method
     // Dispatch allows us to dispatch multiple actions from one action creator
     return (dispatch) => {
+        console.log("email", email);
+        console.log("password", password);
         // Promise
         firebase.auth().signInWithEmailAndPassword(email, password)
             // Then clause
-            .then(user => loginUserSuccess(dispatch, user));
+            .then(user => loginUserSuccess(dispatch, user))
             // If the above fails, run the catch case
             .catch(() => {
                 firebase.auth().createUserWithEmailAndPassword(email, password)
