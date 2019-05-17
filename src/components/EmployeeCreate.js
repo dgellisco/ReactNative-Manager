@@ -30,7 +30,9 @@ class EmployeeCreate extends Component {
                     />
                 </CardSection>
                 
+                {/* Local component that doesn't necessarily have a prop of style.  Must ensure one exists. */}
                 <CardSection style={{ alignItems: 'center', flexDirection: 'column' }}>
+                    {/* React-Native component with a prop of style by default */}
                     <Text style={styles.pickerTextStyle}>Shift</Text>
                     <Picker
                         selectedValue={this.props.shift}
