@@ -1,11 +1,13 @@
-// Action creator file
+// ACTION CREATOR FILE
 
 // Import firebase
 import firebase from 'firebase'
+import { Actions } from 'react-native-router-flux';
 // Import action type variables
 import {
     EMAIL_CHANGED,
     PASSWORD_CHANGED,
+    LOGGING_IN,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL
 } from './types';
@@ -31,6 +33,8 @@ export const loginUser = ({ email, password }) => {
     // This allows us to return an object by using an sync function and the 'dispatch' method
     // Dispatch allows us to dispatch multiple actions from one action creator
     return (dispatch) => {
+        dispatch({ type: LOGGING_IN });
+
         console.log("email", email);
         console.log("password", password);
         // Promise
@@ -38,7 +42,8 @@ export const loginUser = ({ email, password }) => {
             // Then clause
             .then(user => loginUserSuccess(dispatch, user))
             // If the above fails, run the catch case
-            .catch(() => {
+            .catch((error) => {
+                console.log(error);
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(user => loginUserSuccess(dispatch, user))
                     .catch(() => loginUserFail(dispatch))
@@ -57,4 +62,8 @@ const loginUserSuccess = (dispatch, user) => {
         type: LOGIN_USER_SUCCESS,
         payload: user
     });
+
+    Actions.main();
+    Actions.employeeList();
+
 };

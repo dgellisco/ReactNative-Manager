@@ -4,6 +4,7 @@
 import {
     EMAIL_CHANGED,
     PASSWORD_CHANGED,
+    LOGGING_IN,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL
 } from '../actions/types';
@@ -15,7 +16,8 @@ const INITIAL_STATE = {
     email: '',
     password: '',
     user: null,
-    error: ''
+    error: '',
+    loggingIn: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -32,13 +34,22 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, email: action.payload };
         
         case PASSWORD_CHANGED:
-            return { ...state, password: action.payload }
+            return { ...state, password: action.payload };
+
+        case LOGGING_IN:
+            return { ...state, loggingIn: true, error: '' };
         
         case LOGIN_USER_SUCCESS:
-            return { ...state, user: action.payload }
+            // Loads the state, overwrites values in INITIAL_STATE to reset the form, then loads the additional properties
+            return { ...state, ...INITIAL_STATE,
+                user: action.payload,
+                error: 'Authentication Success'
+            };
         
         case LOGIN_USER_FAIL:
-            return { ...state, error: 'Authentication Failed' }
+            return { ...state,
+                error: 'Authentication Failed',
+                loggingIn: false };
 
         default:
             return state;

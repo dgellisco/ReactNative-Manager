@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // Import local actions
 import { emailChanged, loginUser, passwordChanged } from '../actions';
 // Import local components
-import { Button, Card, CardSection, Input } from './common';
+import { Button, Card, CardSection, Input, LoadingSpinner } from './common';
 
 
 class LoginForm extends Component {
@@ -42,6 +42,18 @@ class LoginForm extends Component {
         }
     }
 
+    renderButton() {
+        if (this.props.loggingIn) {
+            return <LoadingSpinner size='large' />;
+        }
+
+        return (
+            <Button onPressFunction={this.onButtonPress.bind(this)}>
+                Login
+            </Button>
+        );
+    }
+
     render() {
         return (
             <Card>
@@ -68,9 +80,7 @@ class LoginForm extends Component {
                 {this.renderError()}
 
                 <CardSection>
-                    <Button onPressFunction={this.onButtonPress.bind(this)}>
-                        Login
-                    </Button>
+                    {this.renderButton()}
                 </CardSection>
 
             </Card>
@@ -86,13 +96,22 @@ const styles = {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        email: state.auth.email,
-        password: state.auth.password,
-        error: state.auth.error
-    };
-};
+// A Redux method.  Takes the state and allows us to selectively map it to props for this component.
+    // #1 way to write it
+// const mapStateToProps = state => {
+//     return {
+//         email: state.auth.email,
+//         password: state.auth.password,
+//         error: state.auth.error,
+//         loggingIn: state.auth.loggingIn
+//     };
+// };
+    // #2 way to write it
+const mapStateToProps = ({ auth }) => {
+    const { email, password, error, loggingIn } = auth;
+
+    return { email, password, error, loggingIn }
+}
 
 // export default connect(null, { emailChanged })LoginForm;
 export default connect(mapStateToProps, {

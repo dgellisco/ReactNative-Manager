@@ -11,7 +11,7 @@ const LoadingSpinner = ({ spinnerSize }) => {
 
 const styles = {
     loadingSpinnerStyle: {
-        flex: 1,
+        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
     }
