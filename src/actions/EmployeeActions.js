@@ -1,7 +1,9 @@
 // ACTION CREATOR FILE
 
+// Import firebase and router-flux actions
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+// Import action type variables
 import {
     EMPLOYEE_CREATE,
     EMPLOYEE_UPDATE,
@@ -9,7 +11,9 @@ import {
     EMPLOYEE_SAVE_SUCCESS
 } from './types';
 
+// Action creator
 export const employeeUpdate = ({ prop, value }) => {
+    // Dispatch action
     return {
         type: EMPLOYEE_UPDATE,
         payload: { prop, value }
@@ -19,6 +23,7 @@ export const employeeUpdate = ({ prop, value }) => {
 // Push new employee to user database
 export const employeeCreate = ({ name, phone, shift }) => {
 
+    // Capture current user info
     const { currentUser } = firebase.auth();
 
     // Thunk workaround to renavigate back to employeeList

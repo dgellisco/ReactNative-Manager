@@ -1,6 +1,6 @@
 // ACTION CREATOR FILE
 
-// Import firebase
+// Import firebase and router-flux actions
 import firebase from 'firebase'
 import { Actions } from 'react-native-router-flux';
 // Import action type variables
@@ -30,7 +30,7 @@ export const passwordChanged = (text) => {
 
 export const loginUser = ({ email, password }) => {
     // Redux-Thunk allows us to return a function from an action creator
-    // This allows us to return an object by using an sync function and the 'dispatch' method
+    // This allows us to return an object by using an async function and the 'dispatch' method
     // Dispatch allows us to dispatch multiple actions from one action creator
     return (dispatch) => {
         dispatch({ type: LOGGING_IN });
@@ -61,6 +61,7 @@ const loginUserSuccess = (dispatch, user) => {
         payload: user
     });
 
+    // Use router-flux to load the employeeList scene
     Actions.main();
     Actions.employeeList();
 
