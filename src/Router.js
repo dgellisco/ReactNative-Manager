@@ -1,6 +1,6 @@
 import React from 'react';
-import { Scene, Router } from 'react-native-router-flux';
-import { Actions } from 'react-native-router-flux';
+import { Actions, Scene, Router } from 'react-native-router-flux';
+import { ImageBackground } from 'react-native';
 import EmployeeCreate from './components/EmployeeCreate';
 import EmployeeEdit from './components/EmployeeEdit';
 import EmployeeList from './components/EmployeeList';
@@ -19,24 +19,29 @@ const RouterComponent = () => {
                 </Scene>
                 {/* When navigating to main, it will render the first child scene within it */}
                 <Scene key="main">
-                    <Scene
-                        rightTitle="Add"
-                        onRight={() => { Actions.employeeCreate() }}
-                        key="employeeList"
-                        component={EmployeeList}
-                        title="Employees"
-                        initial
-                    />
-                    <Scene
-                        key="employeeCreate"
-                        component={EmployeeCreate}
-                        title="Create Employee"
-                    />
-                    <Scene
-                        key="employeeEdit"
-                        component={EmployeeEdit}
-                        title="Edit Employee"
-                    />
+                    <ImageBackground
+                        source={{ uri:  }}
+                        style={{ width: '100%', height: '100%' }}
+                    >
+                        <Scene
+                            rightTitle="Add"
+                            onRight={() => { Actions.employeeCreate() }}
+                            key="employeeList"
+                            component={EmployeeList}
+                            title="Employees"
+                            initial
+                        />
+                        <Scene
+                            key="employeeCreate"
+                            component={EmployeeCreate}
+                            title="Create Employee"
+                        />
+                        <Scene
+                            key="employeeEdit"
+                            component={EmployeeEdit}
+                            title="Edit Employee"
+                        />
+                    </ImageBackground>
                 </Scene>
             </Scene>
         </Router>
