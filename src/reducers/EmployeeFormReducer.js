@@ -1,4 +1,5 @@
 import {
+    EMPLOYEE_CREATE,
     EMPLOYEE_UPDATE
 } from '../actions/types';
 
@@ -16,6 +17,11 @@ export default (state = INITIAL_STATE, action) => {
             // It will take the value of the prop and make that the key name
             // Saves us having to create a new key for name, password, etc.
             return { ...state, [action.payload.prop]: action.payload.value }
+        
+        case EMPLOYEE_CREATE:
+            console.log('Employee Create');
+            console.log(action);
+            return;
 
         default:
             return state;

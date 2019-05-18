@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { Picker, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { employeeUpdate } from '../actions';
+import { employeeCreate, employeeUpdate } from '../actions';
 import { Button, Card, CardSection, Input } from './common'
 
 
 // We choose to put our form data on redux/app-level state, rather than component-level state
 class EmployeeCreate extends Component {
+    onButtonPress() {
+        const { name, phone, shift } = this.props;
+        console.log('onButtonPress');
+        console.log(this.props);
+        console.log('onButtonPress');
+
+        // For shift, default to shift value or use 'Monday' if shift is an empty string, which is a falsey value
+        this.props.employeeCreate({ name, phone, shift: shift || 'Monday' });
+    }
+
     render() {
         return (
             <Card>
@@ -31,7 +41,7 @@ class EmployeeCreate extends Component {
                 </CardSection>
                 
                 {/* Local component that doesn't necessarily have a prop of style.  Must ensure one exists. */}
-                <CardSection style={{ alignItems: 'center', flexDirection: 'column' }}>
+                <CardSection style={{ flexDirection: 'column' }}>
                     {/* React-Native component with a prop of style by default */}
                     <Text style={styles.pickerTextStyle}>Shift</Text>
                     <Picker
@@ -49,7 +59,8 @@ class EmployeeCreate extends Component {
                 </CardSection>
 
                 <CardSection>
-                    <Button>
+                    {/* Bind the context because this is a callback on this file */}
+                    <Button onPress={this.onButtonPress.bind(this)}>
                         Create
                     </Button>
                 </CardSection>
@@ -72,5 +83,8 @@ const mapStateToProps = (state) => {
     return { name, phone, shift };
 };
 
+// Connect handler
 // connect(???, { actionCreator, actionCreator })(thisComponent);
-export default connect(mapStateToProps, { employeeUpdate })(EmployeeCreate);
+export default connect(mapStateToProps, {
+    employeeCreate, employeeUpdate
+})(EmployeeCreate);
