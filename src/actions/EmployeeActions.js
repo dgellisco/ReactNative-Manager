@@ -5,7 +5,8 @@ import { Actions } from 'react-native-router-flux';
 import {
     EMPLOYEE_CREATE,
     EMPLOYEE_UPDATE,
-    EMPLOYEES_FETCH_SUCCESS
+    EMPLOYEES_FETCH_SUCCESS,
+    EMPLOYEE_SAVE_SUCCESS
 } from './types';
 
 export const employeeUpdate = ({ prop, value }) => {
@@ -49,6 +50,34 @@ export const employeesFetch = () => {
             .on('value', snapshot => {
                 // snapshot.val() gives the actual employee back
                 dispatch({ type: EMPLOYEES_FETCH_SUCCESS, payload: snapshot.val() });
+            });
+    };
+};
+
+export const employeeSave = ({ name, phone, shift, uid }) => {
+    const { currentUser } = firebase.auth();
+
+    // aSync, use thunk dispatch method
+    return (dispatch) => {
+        // Locate database record with id of employee entry
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+            .set({ name, phone, shift })
+            .then(() => {
+                dispatch({ type: EMPLOYEE_SAVE_SUCCESS });
+                Actions.employeeList({ type: 'reset' });
+            });
+    };
+};
+
+export const employeeDelete = ({ uid }) => {
+    const { currentUser } = firebase.auth();
+
+    // aSync.  We don't need to use change, because the firebase on value will automatically update our employeeList
+    return() => {
+        firebase.database().ref(`/users/${currentUser.uid}/employees/${uid}`)
+            .remove()
+            .then(() => {
+                Actions.employeeList({ type: 'reset' });
             });
     };
 };
