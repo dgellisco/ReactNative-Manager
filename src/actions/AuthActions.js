@@ -35,8 +35,6 @@ export const loginUser = ({ email, password }) => {
     return (dispatch) => {
         dispatch({ type: LOGGING_IN });
 
-        console.log("email", email);
-        console.log("password", password);
         // Promise
         firebase.auth().signInWithEmailAndPassword(email, password)
             // Then clause

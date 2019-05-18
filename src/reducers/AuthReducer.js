@@ -21,13 +21,12 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-    console.log(action);
 
     switch (action.type) {
 
         case EMAIL_CHANGED:
             // Outer curly braces creates a new object.
-            // The ... takes all the properties (key/values) from state and throws them into a new object
+            // The spread syntax (...) takes all the properties (key/values) from state and throws them into a new object
             // It also adds on the action.payload, using a key of 'email'.  If the key of 'email' already exists, it will be over-written.
             // Because this is a new object in memory, it will cause Redux to re-render
             // Objects returned from a reducer must be a new object, so always use the destructing i.e. ...

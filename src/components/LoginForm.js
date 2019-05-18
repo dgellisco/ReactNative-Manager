@@ -23,7 +23,6 @@ class LoginForm extends Component {
     }
 
     onButtonPress() {
-        console.log("got pressed");
 
         const { email, password } = this.props;
 

@@ -9,15 +9,14 @@ import { Button, Card, CardSection, Input } from './common'
 class EmployeeCreate extends Component {
     onButtonPress() {
         const { name, phone, shift } = this.props;
-        console.log('onButtonPress');
-        console.log(this.props);
-        console.log('onButtonPress');
 
         // For shift, default to shift value or use 'Monday' if shift is an empty string, which is a falsey value
         this.props.employeeCreate({ name, phone, shift: shift || 'Monday' });
     }
 
     render() {
+        console.log(this.props.employee);
+
         return (
             <Card>
                 <CardSection>
